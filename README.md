@@ -30,7 +30,7 @@
 > ```python
 > from typing import List, Dict
 > 
-> from main import BTCHost
+> from btc import BTCHost
 > 
 > 
 > btc_node = BTCHost()
@@ -77,6 +77,9 @@
 >
 > Python code:
 > ```python
+> from btc import BTCHost
+>  
+>
 > btc_node = BTCHost()
 > result = btc_node.importaddress(bc1q4ezgpx74wezpf55w967dvy8rpsrncptgw0u8a7, "", True, False)
 > print(result)             # None (json null)
