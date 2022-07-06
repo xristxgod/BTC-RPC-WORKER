@@ -1,6 +1,6 @@
 # BTC - RPC worker
 
->Implementation of work with BTC RPC API node via python code.
+>Implementation of work with BTC wallet RPC API via python code.
 
 -----
 ### Setup:
@@ -25,7 +25,7 @@
 
 -----
 ### How to run:
-> [Bitcoin API methods](https://developer.bitcoin.org/reference/rpc/)
+> [Bitcoin API wallet methods](https://developer.bitcoin.org/reference/rpc/#wallet-rpcs)
 
 > ```python
 > from typing import List, Dict
