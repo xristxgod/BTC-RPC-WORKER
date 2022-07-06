@@ -9,7 +9,7 @@
 > # SSH
 > git clone https://github.com/xristxgod/BTC-RPC-WORKER.git
 > # HTTPS
-> git@github.com:xristxgod/BTC-RPC-WORKER.git
+> git clone git@github.com:xristxgod/BTC-RPC-WORKER.git
 >```
 
 -----
