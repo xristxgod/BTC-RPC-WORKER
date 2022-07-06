@@ -1,4 +1,4 @@
-# BTC - RPC worker
+# BTC Wallet worker
 
 >Implementation of work with BTC wallet RPC API via python code.
 
