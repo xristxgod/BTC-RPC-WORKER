@@ -1,5 +1,5 @@
 import json
-import logging
+from typing import Union, List, Dict
 
 import requests
 
@@ -40,7 +40,7 @@ class RPCMethod:
     def __getattr__(self, method: str):
         return RPCMethod('{}.{}'.format(self._method, method), self._host)
 
-    def __call__(self, *params):
+    def __call__(self, *params) -> Union[List[Dict], Dict]:
         __payload = json.dumps({"method": self._rpc_method, "params": params, "jsonrpc": "2.0"})
         try:
             response = self.host.session.post(
@@ -64,11 +64,8 @@ class RPCMethod:
 
 if __name__ == '__main__':
     btc_host = BTCHost()
-    try:
-        # Get wallet balance
-        balance = sum([x[0] for x in btc_host.get_unspent(Config.WALLET_ADDRESS)])
-        logging.info(f"YOUR WALLETS BALANCE: {balance}")
-    except Exception as error:
-        logging.error(f"ERROR: {error}")
-    finally:
-        del btc_host
+    result = btc_host.listunspent(0, 9999999, [Config.WALLET_ADDRESS])
+    assert result is not None and isinstance(result, list)
+    text_tx: Dict = result[0]
+    assert text_tx.get("amount") is not None
+    assert text_tx.get("txid") is not None
