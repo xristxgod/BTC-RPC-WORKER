@@ -1,27 +1,27 @@
+import os
 import json
 from typing import Union, List, Dict
 
 import requests
-
-from config import Config
 
 
 class BTCHost:
     """BTCHost - connect to BTC node"""
     __slots__ = (
         "session", "url", "headers", "__instance",
-        "DEFAULT_TIMEOUT", "SATOSHI_IN_BTC"
+        "_BTC_NODE_HOST", "_WALLET_ADDRESS"
     )
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
-            cls.DEFAULT_TIMEOUT, cls.SATOSHI_IN_BTC = 10, 10 ** 8
+            cls._BTC_NODE_HOST = os.getenv("BTC_NODE_HOST", f"http://username:password@host:port")
+            cls._WALLET_ADDRESS = os.getenv("WALLET_ADDRESS", "...")
             cls.__instance = super(BTCHost, cls).__new__(cls)
         return cls.__instance
 
     def __init__(self):
         self.session = requests.Session()
-        self.url = Config.BTC_NODE_HOST + "/wallet/" + Config.WALLET_ADDRESS
+        self.url = self._BTC_NODE_HOST + "/wallet/" + self._WALLET_ADDRESS
         self.headers = {"content-type": "application/json"}
         self.session.verify = False
 
@@ -64,7 +64,7 @@ class RPCMethod:
 
 if __name__ == '__main__':
     btc_host = BTCHost()
-    result = btc_host.listunspent(0, 9999999, [Config.WALLET_ADDRESS])
+    result = btc_host.listunspent(0, 9999999, ["btcWalletAddress"])
     assert result is not None and isinstance(result, list)
     text_tx: Dict = result[0]
     assert text_tx.get("amount") is not None
